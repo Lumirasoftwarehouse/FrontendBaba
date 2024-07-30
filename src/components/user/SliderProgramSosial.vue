@@ -2,7 +2,7 @@
   <div class="photo-gallery">
     <div class="gallery-container">
       <div v-for="item in items" :key="item.id" class="gallery-item me-2">
-        <img :src="`http://127.0.0.1:8000` + item.image" alt="Photo" class="gallery-photo"/>
+        <img :src="`https://apibaba.lumirainternational.com` + item.image" alt="Photo" class="gallery-photo"/>
         <div class="gallery-text">{{ item.judul }}</div>
       </div>
     </div>
@@ -21,7 +21,7 @@ export default {
   methods: {
     async fetchItems() {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/sosial/list-sosial',
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/sosial/list-sosial`,
             {
               headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("token")}`,

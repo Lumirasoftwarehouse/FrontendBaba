@@ -32,7 +32,7 @@
         <div class="row g-0">
           <div class="col-4">
             <img
-              :src="`http://127.0.0.1:8000` + program.image"
+              :src="`https://apibaba.lumirainternational.com` + program.image"
               class="img-fluid rounded-start"
               alt="Program Image"
               height="400"

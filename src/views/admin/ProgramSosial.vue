@@ -86,7 +86,7 @@ const toggleSidebar = () => {
                   </td>
                   <td>
                     <img
-                      :src="`http://127.0.0.1:8000` + item.image"
+                      :src="`https://apibaba.lumirainternational.com` + item.image"
                       :alt="item.judul"
                       style="max-width: 100px; cursor: pointer"
                       @click="detailBukti(item.image)"
@@ -159,7 +159,7 @@ const toggleSidebar = () => {
             <!-- Gambar -->
             <div class="col-md-4">
               <img
-                :src="`http://127.0.0.1:8000` + dataselect.image"
+                :src="`https://apibaba.lumirainternational.com` + dataselect.image"
                 class="img-fluid rounded"
                 alt="Program Sosial Image"
               />
@@ -356,7 +356,7 @@ export default {
         formData.append("judul", this.formProgram.judul);
         formData.append("deskripsi", this.formProgram.deskripsi);
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/sosial/create-sosial`,
+          `${import.meta.env.VITE_API_ENDPOINT}/sosial/create-sosial`,
           formData,
           {
             headers: {
@@ -388,7 +388,7 @@ export default {
         formData.append("judul", this.dataselect.judul);
         formData.append("deskripsi", this.dataselect.deskripsi);
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/sosial/update-sosial/${this.dataselect.id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/sosial/update-sosial/${this.dataselect.id}`,
           formData,
           {
             headers: {
@@ -431,7 +431,7 @@ export default {
           formData.append("id", id);
           formData.append("status", status);
           const response = await axios.post(
-            `http://127.0.0.1:8000/api/sosial/change-status`,
+            `${import.meta.env.VITE_API_ENDPOINT}/sosial/change-status`,
             formData,
             {
               headers: {
@@ -470,7 +470,7 @@ export default {
       try {
         this.ready = false;
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/sosial/list-sosial`,
+          `${import.meta.env.VITE_API_ENDPOINT}/sosial/list-sosial`,
           {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),

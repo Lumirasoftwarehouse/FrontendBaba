@@ -252,7 +252,7 @@ export default {
       try {
         this.ready = false;
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/rekening/list`,
+          `${import.meta.env.VITE_API_ENDPOINT}/rekening/list`,
           {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -268,7 +268,7 @@ export default {
     async createRekening() {
       try {
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/rekening/create`,
+          `${import.meta.env.VITE_API_ENDPOINT}/rekening/create`,
           this.newRekening,
           {
             headers: {
@@ -293,7 +293,7 @@ export default {
     async updateRekening() {
       try {
         await axios.post(
-          `http://127.0.0.1:8000/api/rekening/update/${this.selectedRekening.id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/rekening/update/${this.selectedRekening.id}`,
           this.selectedRekening,
           {
             headers: {
@@ -329,7 +329,7 @@ export default {
     async deleteRekening(rekening) {
       try {
         await axios.delete(
-          `http://127.0.0.1:8000/api/rekening/delete/${rekening.id}`,
+          `${import.meta.env.VITE_API_ENDPOINT}/rekening/delete/${rekening.id}`,
           {
             headers: {
               Authorization: "Bearer " + sessionStorage.getItem("token"),

@@ -31,7 +31,7 @@
       <div class="row g-0">
         <div class="col-4">
           <img
-            :src="`http://127.0.0.1:8000` + program.image"
+            :src="`https://apibaba.lumirainternational.com` + program.image"
             class="img-fluid rounded-start"
             alt="Program Image"
             height="400"
@@ -69,7 +69,7 @@ const goBack = () => {
 const fetchPrograms = async () => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/sosial/list-sosial",
+      `${import.meta.env.VITE_API_ENDPOINT}/sosial/list-sosial`,
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
