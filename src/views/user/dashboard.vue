@@ -149,14 +149,14 @@ export default {
       this.ready = false;
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_ENDPOINT}/check-balance`,
+          `${import.meta.env.VITE_API_ENDPOINT}/saldo/my-saldo`,
           {
             headers: {
               Authorization: `Bearer ${sessionStorage.getItem("token")}`,
             },
           }
         );
-        this.deposit = response.data.data.deposit;
+        this.deposit = response.data.saldo;
         this.ready = true;
       } catch (error) {
         console.error(error); 

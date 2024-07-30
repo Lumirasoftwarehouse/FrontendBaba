@@ -19,11 +19,7 @@
     <div class="sidebar-heading mt-5 text-success">Menu</div>
 
     <li class="nav-item">
-      <router-link
-        class="nav-link text-dark"
-        to="/"
-        active-class="active-link"
-      >
+      <router-link class="nav-link text-dark" to="/" active-class="active-link">
         <i class="bi bi-grid text-dark"></i>
         <span>Dashboard</span>
       </router-link>
@@ -48,40 +44,48 @@
         <span>Transaksi</span>
       </router-link>
     </li>
+    <li class="nav-item">
+      <router-link
+        class="nav-link text-dark"
+        to="/admin-rekening"
+        active-class="active-link"
+      >
+        <i class="bi bi-card-heading text-dark"></i>
+        <span>Rekening</span>
+      </router-link>
+    </li>
 
-      <!-- Beranda -->
-  <li class="nav-item">
-    <a
-      class="nav-link collapsed text-primary"
-      href="#"
-      data-toggle="collapse"
-      data-target="#collapsePagesProduct"
-      aria-expanded="true"
-      aria-controls="collapsePagesProduct"
-    >
-              <i class="bi bi-bag-fill text-dark"></i>
-      <span>Product</span>
-    </a>
+    <!-- Beranda -->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed text-primary"
+        href="#"
+        data-toggle="collapse"
+        data-target="#collapsePagesProduct"
+        aria-expanded="true"
+        aria-controls="collapsePagesProduct"
+      >
+        <i class="bi bi-bag-fill text-dark"></i>
+        <span>Product</span>
+      </a>
 
-    <div
-      id="collapsePagesProduct"
-      class="collapse"
-      aria-labelledby="headingPages"
-      data-parent="#accordionSidebar"
-    >
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Menu Product</h6>
-        <router-link
-          class="dropdown-item"
-          :to="{ name: 'admin-product' }"
-          >List Product</router-link>
-        <router-link
-          class="dropdown-item"
-          :to="{ name: 'my-product' }"
-          >My Product</router-link>
+      <div
+        id="collapsePagesProduct"
+        class="collapse"
+        aria-labelledby="headingPages"
+        data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">Menu Product</h6>
+          <router-link class="dropdown-item" :to="{ name: 'admin-product' }"
+            >List Product</router-link
+          >
+          <router-link class="dropdown-item" :to="{ name: 'my-product' }"
+            >My Product</router-link
+          >
+        </div>
       </div>
-    </div>
-  </li>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block" />

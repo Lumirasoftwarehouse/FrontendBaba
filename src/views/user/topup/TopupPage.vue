@@ -11,10 +11,11 @@
     </div>
 
     <!-- Penerima -->
-    <h6 class="mt-3">Bank Penerima</h6>
+    <h6 class="mt-3 fw-bold mt-4">Data Penerima</h6>
     <div class="form-group mt-3">
       <label for="selectBankPenerima">Pilih Bank</label>
       <select class="form-control" id="selectBankPenerima" v-model="selectedBankPenerima" @change="updateReceiverDetails">
+        <option disabled selected>Pilih Bank</option>
         <option v-for="bank in bankPenerima" :key="bank.id" :value="bank">{{ bank.jenis_bank }}</option>
       </select>
     </div>
@@ -26,9 +27,9 @@
       <label for="accountNumberPenerima">Rekening</label>
       <input type="text" class="form-control" id="accountNumberPenerima" :value="receiverDetails.accountNumber" readonly />
     </div>
-
+    <hr>
     <!-- Pengirim -->
-    <h6 class="mt-3">Bank Pengirim</h6>
+    <h6 class="mt-3 fw-bold mt-5">Data Pengirim</h6>
     <div class="form-group mt-3">
       <label for="selectBankPengirim">Pilih Bank</label>
       <select class="form-control" id="selectBankPengirim" v-model="selectedBankPengirim">
@@ -77,8 +78,10 @@ export default {
 
     const bankPenerima = ref([]);
     const bankPengirim = ref([
-      { id: 1, name: 'Bank C' },
-      { id: 2, name: 'Bank D' },
+      { id: 1, name: 'BRI' },
+      { id: 2, name: 'Mandiri' },
+      { id: 3, name: 'BCA' },
+      { id: 4, name: 'BNI' },
     ]);
 
     const selectedBankPenerima = ref(null);
@@ -97,6 +100,7 @@ export default {
     });
 
     const transferProof = ref(null);
+    const transferProofFile = ref(null); // Menyimpan file asli yang diunggah
 
     const updateReceiverDetails = () => {
       if (selectedBankPenerima.value) {
@@ -111,6 +115,7 @@ export default {
 
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
+      transferProofFile.value = file; // Menyimpan file asli
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -140,13 +145,37 @@ export default {
       router.go(-1);
     };
 
-    const submitTopUp = () => {
-      // Logic untuk submit top-up
-      console.log('Bank Penerima:', selectedBankPenerima.value);
-      console.log('Receiver Details:', receiverDetails);
-      console.log('Bank Pengirim:', selectedBankPengirim.value);
-      console.log('Sender Details:', senderDetails);
-      console.log('Transfer Proof:', transferProof.value);
+    const submitTopUp = async () => {
+      const formData = new FormData();
+      formData.append('bank_type', selectedBankPengirim.value?.name || '');
+      formData.append('bank_account_name', senderDetails.accountName);
+      formData.append('account_number', senderDetails.accountNumber);
+      formData.append('jumlah_transaksi', senderDetails.transferAmount);
+      formData.append('keterangan', senderDetails.notes);
+      formData.append('rekeningId', selectedBankPenerima.value?.id || '');
+      formData.append('bukti_transfer', transferProofFile.value); // Menambahkan file bukti transfer
+
+      try {
+        const response = await axios.post(
+          // `http://127.0.0.1:8000/api/topup-saldo`,
+          `${import.meta.env.VITE_API_ENDPOINT}/auth/saldo/topup-saldo`,
+          formData,
+          {
+            headers: {
+              Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+
+        // Tanggapan sukses dari server
+        console.log(response.data);
+        // Tindakan lebih lanjut seperti navigasi atau notifikasi
+        router.push('/home'); // Contoh: redirect ke halaman home
+      } catch (error) {
+        console.error(error);
+        // Tampilkan pesan error
+      }
     };
 
     onMounted(() => {

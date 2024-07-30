@@ -50,7 +50,7 @@ const bayarPulsa = async () => {
     }
 
     const response = await axios.post(
-      `${import.meta.env.VITE_API_ENDPOINT}/bayar-tagihan`,
+      `${import.meta.env.VITE_API_ENDPOINT}/digi/bayar-tagihan`,
       formData,
       {
         headers: {
