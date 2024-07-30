@@ -123,7 +123,7 @@ export default {
       formData.append("password", this.form.password);
 
       axios
-        .post(`http://127.0.0.1:8000/api/auth/login`, formData)
+        .post(`${import.meta.env.VITE_API_ENDPOINT}/auth/login`, formData)
         .then((response) => {
           if (this.cheked === true) {
             const login = JSON.stringify(this.form);
