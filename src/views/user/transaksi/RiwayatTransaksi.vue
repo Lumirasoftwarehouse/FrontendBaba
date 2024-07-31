@@ -9,19 +9,18 @@
       </div>
     </div>
 
-
     <div class="row mt-3" v-for="(transaction, index) in transactions" :key="index">
-      <div class="col-12 mb-3">
+      <div class="col-12 mb-3" v-if="transaction.judul">
         <div class="card shadow-sm customCard">
           <div class="card-body d-flex justify-content-between align-items-center">
             <div class="left-section">
-              <h5 class="card-title mb-1">{{ transaction.bank }}</h5>
-              <p class="card-text mb-1 text-muted">{{ transaction.time }}</p>
-              <p class="card-text mb-1">{{ transaction.type }}</p>
+              <h5 class="card-title mb-1">{{ transaction.judul }}</h5>
+              <p class="card-text mb-1 text-muted">{{ formatDate(transaction.created_at) }}</p>
+              <p class="card-text mb-1">{{ getType(transaction.jenis) }}</p>
             </div>
             <div class="right-section">
-              <span :class="{'text-success': transaction.amount > 0, 'text-danger': transaction.amount < 0}">
-                Rp.{{ transaction.amount }}
+              <span :class="{'text-success': transaction.nominal > 0, 'text-danger': transaction.nominal < 0}">
+                Rp.{{ formatCurrency(transaction.nominal) }}
               </span>
             </div>
           </div>
@@ -32,41 +31,66 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      transactions: [
-        { bank: 'Bank ABC', time: '2024-06-18 14:00', type: 'Deposit', amount: 500000 },
-        { bank: 'Bank XYZ', time: '2024-06-18 12:00', type: 'Withdrawal', amount: -250000 },
-        { bank: 'Bank DEF', time: '2024-06-17 09:00', type: 'Transfer', amount: 300000 },
-        // Tambahkan data transaksi lainnya di sini
-      ],
+      transactions: [],
     };
   },
-   methods: {
+  methods: {
+    async fetchTransactions() {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/saldo/histori-transaksi`, {
+          headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+          },
+        });
+        this.transactions = response.data.data;
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+      }
+    },
     goBack() {
       this.$router.go(-1);
     },
-   },
-  filters: {
-    currency(value) {
-      let val = (value / 1).toFixed(0).replace('.', ',')
-      return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    formatCurrency(value) {
+      let val = (value / 1).toFixed(0).replace('.', ',');
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    },
+    formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return new Date(dateString).toLocaleDateString('id-ID', options);
+    },
+    getType(jenis) {
+      switch(jenis) {
+        case '0':
+          return 'Pengeluaran';
+        case '1':
+          return 'Pemasukan';
+        default:
+          return 'Unknown';
+      }
     }
+  },
+  async mounted() {
+    await this.fetchTransactions();
   }
 };
 </script>
 
 <style scoped>
-h5{
-    color: black;
+h5 {
+  color: black;
 }
 
-p{
-    color: #757575;
+p {
+  color: #757575;
 }
-.customCard{
-    background-color: #DEE5EF;
+
+.customCard {
+  background-color: #DEE5EF;
 }
 
 .card {

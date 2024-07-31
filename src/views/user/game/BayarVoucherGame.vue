@@ -16,7 +16,7 @@ const bayarTagihanPln = async () => {
     formData.append("customer_no", "530000000001");
     formData.append("ref_id", "some1d");
     const response = await axios.post(
-      `${import.meta.env.VITE_API_ENDPOINT}/bayar-tagihan`,
+      `${import.meta.env.VITE_API_ENDPOINT}/digi/bayar-tagihan`,
       formData,
       {
         headers: {

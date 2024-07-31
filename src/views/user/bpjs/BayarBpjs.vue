@@ -145,7 +145,7 @@ export default {
         formData.append("customer_no", this.$route.params.nomorpeserta);
         formData.append("ref_id", "some1d");
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/cek-tagihan`,
+          `${import.meta.env.VITE_API_ENDPOINT}/digi/cek-tagihan`,
           formData,
           {
             headers: {
@@ -165,7 +165,7 @@ export default {
         formData.append("customer_no", this.$route.params.nomorpeserta);
         formData.append("ref_id", "some1d");
         const response = await axios.post(
-          `${import.meta.env.VITE_API_ENDPOINT}/bayar-tagihan`,
+          `${import.meta.env.VITE_API_ENDPOINT}/digi/bayar-tagihan`,
           formData,
           {
             headers: {

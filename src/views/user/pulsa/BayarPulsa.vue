@@ -59,22 +59,39 @@ const bayarPulsa = async () => {
       }
     );
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Pembayaran berhasil',
-      text: 'Anda akan diarahkan ke halaman utama.',
-      timer: 2000,
-      showConfirmButton: false
-    }).then(() => {
-      window.location.href = '/home';
-    });
+    if (response.data.message == 'success') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Pembayaran berhasil',
+        text: 'Anda akan diarahkan ke halaman utama.',
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = '/home';
+      });
+    }else{
+       Swal.fire({
+        icon: 'error',
+        title: 'Pembayaran gagal',
+        text: 'Saldo anda tidak mencukupi untuk melakukan pembayaran!!',
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = '/home';
+      });
+    }
+
   } catch (error) {
     console.error(error);
-    Swal.fire({
-      icon: 'error',
-      title: 'Pembayaran gagal',
-      text: 'Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.',
-    });
+     Swal.fire({
+        icon: 'error',
+        title: 'Pembayaran gagal',
+        text: 'Saldo anda tidak mencukupi untuk melakukan pembayaran!!',
+        timer: 2000,
+        showConfirmButton: false
+      }).then(() => {
+        window.location.href = '/home';
+      });
   }
 };
 </script>
