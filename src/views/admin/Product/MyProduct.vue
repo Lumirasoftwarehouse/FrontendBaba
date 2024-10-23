@@ -48,11 +48,6 @@ const toggleSidebar = () => {
                 <tr v-for="(item, index) in dataProduct" :key="item.id">
                   <th scope="row">{{ index + 1 }}</th>
                   <td>
-                    <div
-                      class="btn-group"
-                      role="group"
-                      aria-label="Basic mixed styles example"
-                    >
                       <button
                         type="button"
                         class="btn btn-warning"
@@ -62,10 +57,15 @@ const toggleSidebar = () => {
                       >
                         <i class="bi bi-pencil-square"></i>
                       </button>
+                    <!-- <div
+                      class="btn-group"
+                      role="group"
+                      aria-label="Basic mixed styles example"
+                    >
                       <button type="button" class="btn btn-danger" @click="confirmationDeleting(item)">
                         <i class="bi bi-trash-fill"></i>
                       </button>
-                    </div>
+                    </div> -->
                   </td>
                   <td>{{ item.product_name }}</td>
                   <td>{{ item.category }}</td>
